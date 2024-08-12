@@ -9,26 +9,28 @@ function Registration() {
     event.preventDefault();
 
     try {
-      const response = await fetch("https://intern-task-api.bravo68web.workers.dev/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        setSuccessMessage("Registration successful!");
-        setEmail(""); 
-        setPassword("");
-       
-        setSuccessMessage("Registration failed. Please try again.");
-      }
+        const response = await fetch("https://intern-task-api.bravo68web.workers.dev/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            setSuccessMessage("Registration successful!");
+            setEmail(""); 
+            setPassword("");
+        } else {
+            // Display the error message returned from the API
+            setSuccessMessage(data.message || "Registration failed. Please try again.");
+        }
     } catch (error) {
-      console.error(error);
-      setSuccessMessage("Registration failed. Please try again.");
+        console.error(error);
+        setSuccessMessage("An error occurred. Please try again.");
     }
-  };
+};
+
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">

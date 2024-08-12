@@ -10,7 +10,7 @@ function Card({ title, thumbnail, price }) {
           alt="Product"
         />
         <div className="absolute bottom-0 right-0 bg-gray-800 text-white text-sm px-2 py-1 m-2 rounded transform -rotate-12">
-          {price}
+          ${price}
         </div>
       </div>
       <div className="mt-4 text-center ">

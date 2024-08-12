@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 function Login() {
@@ -10,35 +10,28 @@ function Login() {
 
   const baseurl = "https://intern-task-api.bravo68web.workers.dev/";
 
-  useEffect(() => {
-    axios.get(`${baseurl}auth/login`)
-      .then((response) => {
-        console.log(response.data);
-        setSuccess(true);
-      })
-      .catch((err) => {
-        setError("An error occurred while fetching data.");
-        console.error(err);
-      });
-  }, []);
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
     setSuccess(false);
     setSubmitted(true);
 
-    axios.post(`${baseurl}auth/login`, { email, password })
-    .then((response) => {
+    try {
+      const response = await axios.post(`${baseurl}auth/login`, { email, password });
+
+      // Check if the login was successful
+      if (response.status === 200) {
         const token = response.data.token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('userName', email);
-        window.location.href = '/product'; 
-      })
-      .catch((err) => {
-        console.error(err.response);
-        setError("Invalid email or password.");
-      });
+        localStorage.setItem("token", token);
+        localStorage.setItem("userName", email);
+        setSuccess(true);
+        window.location.href = "/product"; // Redirect to the product page only on successful login
+      }
+    } catch (err) {
+      // Display error message if login fails
+      console.error(err.response);
+      setError("Invalid email or password.");
+    }
   };
 
   return (
