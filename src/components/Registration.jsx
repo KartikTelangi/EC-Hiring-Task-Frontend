@@ -22,7 +22,7 @@ function Registration() {
             setEmail(""); 
             setPassword("");
         } else {
-            // Display the error message returned from the API
+            
             setSuccessMessage(data.message || "Registration failed. Please try again.");
         }
     } catch (error) {

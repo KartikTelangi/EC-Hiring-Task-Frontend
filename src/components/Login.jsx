@@ -19,16 +19,16 @@ function Login() {
     try {
       const response = await axios.post(`${baseurl}auth/login`, { email, password });
 
-      // Check if the login was successful
+      
       if (response.status === 200) {
         const token = response.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("userName", email);
         setSuccess(true);
-        window.location.href = "/product"; // Redirect to the product page only on successful login
+        window.location.href = "/product"; 
       }
     } catch (err) {
-      // Display error message if login fails
+      
       console.error(err.response);
       setError("Invalid email or password.");
     }
